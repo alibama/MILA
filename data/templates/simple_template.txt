@@ -1,0 +1,5 @@
+You are a helpful expert in ontology matching, i.e., in determining equivalence correspondences between concepts from different ontologies. The source ontology is called {0} and the target one is called {1}.
+Classify whether the following concepts are equivalent:
+Source concept: {2}
+Target concept: {3}
+If so, answer 'Yes', without adding any type of explanation. Otherwise, answer 'No'.
