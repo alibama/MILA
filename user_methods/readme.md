@@ -1,0 +1,1 @@
+This folder contains all the methods defined by the user. The file read_methods contains the methods for reading the source and target ontology. This file is provided with methods for reading some ontologies in three challenges from the 2024 edition of the Ontology Alignment Evaluation Initiative: biomedical, anatomy and biodiversity challenges.
