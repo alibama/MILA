@@ -1,0 +1,93 @@
+# config.yaml
+
+# Ontology-related configurations and directory paths for various data files used in the ontology processing
+ontology:
+  # Path to the original raw data before any processing or conversion
+  original_data_path: "data/original_data/"
+
+  # Path to store processed ontology data, after reading from original format
+  ontology_data_path: "data/ontology_data/"
+
+  # Path to store vectorized knowledge bases (KBs), typically after converting ontologies into vector formats for ML processing
+  vector_kb_path: "data/vector_KBs/"
+
+  # The source ontology (e.g., mouse ontology) from which data will be processed
+  source_ontology: "envo"
+
+  # The target ontology (e.g., human ontology) that the source ontology data will be mapped to
+  target_ontology: "sweet"
+
+  # The file extension or format for ontology files (e.g., OWL for Web Ontology Language)
+  ontology_extension: "rdf"
+
+# Dataset-related configurations and paths
+test:
+   # Path to test data
+   test_path: "data/test_data/"   
+   input_file: "reference"
+   file_extension: "rdf"
+   output_file: "test"
+   
+# Prompt Templates
+prompt:
+    # Path to the folder with templates
+    template_path: "data/templates/"
+    
+    # The template stored in a txt file to be used to query the LLM
+    template: "simple_template"
+    
+    # Text file with credentials
+    credential_path: "../"
+    credential_file: "private"
+    
+    # True if the access to the LLM is through a chatbot
+    chatbot: "False"
+    
+    #Directory cookies for LLM chatbot cookies
+    cookie_path: "" #"./cookies/"
+    
+# Correspondences-related configurations and paths
+correspondences:
+    correspondence_path: "data/correspondence_data/"
+    output_file: "correspondences"
+
+# Configuration for ontology and dataset read methods defined by the user
+read_methods: 
+  # Path to user methods
+  read_method_path: "user_methods.read_methods"
+  
+  # Method used to read source ontology preferred terms, e.g., "baseline_read" for the default approach
+  source_PT_read_method: "envo_read"
+
+  # Method used to read target ontology preferred terms, e.g., "obo_read" for reading OBO format terms with related synonyms
+  target_PT_read_method: "sweet_read"
+
+  # Method used to extract and save reference entities from rdf
+  extraction_method: "extract_and_save_entities_from_rdf"
+
+# Configuration for LLM access methods defined by the user
+LLM_methods: 
+  LLM_method_path: "user_methods.LLM_methods"
+  #Method for reading LLM credentials
+  query_LLM_method: "query_LLM_ollama_simple_template"
+
+
+default_settings:
+  
+  # The number of nearest neighbors (k) to consider for vector similarity
+  k: 5
+
+  # Threshold for filtering or scoring ontology matches (adjustable based on your model's performance)
+  threshold: 0.75
+
+  # Model to use for generating embeddings (should match a valid model name or path)
+  model: "multi-qa-distilbert-cos-v1"
+
+  # Whether or not to store embeddings after they are generated
+  store_embeddings: True
+  #LLM model
+  
+  LLM_model: "llama3:8b-instruct-fp16"
+  
+  temperature: 0.7
+  
