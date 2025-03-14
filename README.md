@@ -9,11 +9,13 @@ For these edge correspondences, MILA applies a prioritized depth-first search (P
 Although the overall time complexity remains consistent with current LLM-based OM systems, MILA significantly reduces execution time, especially when the retrieval system ranks the most relevant candidates first. 
 To achieve efficiency gains, MILA’s retrieval system prioritizes correspondences between entities with the most semantically similar synonyms. 
 
+https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5074656
+
 # 🔍 MILA: MInimizing LLM Prompts in Ontology MApping 
 
 ![MILA Overview](images/Figure_1.jpg) 
 
-https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5074656
+
 
 ## Workflow
 MILA consists of **two main steps**:
