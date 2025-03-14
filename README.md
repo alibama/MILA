@@ -13,6 +13,8 @@ To achieve efficiency gains, MILA’s retrieval system prioritizes correspondenc
 
 ![MILA Overview](images/Figure_1.jpg) 
 
+https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5074656
+
 ## Workflow
 MILA consists of **two main steps**:
 
