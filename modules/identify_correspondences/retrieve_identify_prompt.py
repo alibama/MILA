@@ -148,10 +148,10 @@ def retrieve_identify_prompt (source_ontology, target_ontology, source_entities,
                         confirmed=False
                         #print(cand_list)
                         while i<len(cand_list):
-                            ini2=time.time()
+                            
                             #Get the preferred term for tgt_cand
                             tgt_cand=cand_list[i]
-                            #tgt_term=pref_terms_pd[pref_terms_pd['Entity']==tgt_cand]['Term'].values[0]
+                            
                             tgt_term = target_classes_pd[target_classes_pd['Entity'] == tgt_cand]['Term'].values.tolist()[0].split('|')[1]
                             
                             prompt=generate_dynamic_prompt(template_text, source_ontology, target_ontology, query_PT, tgt_term)
@@ -163,9 +163,7 @@ def retrieve_identify_prompt (source_ontology, target_ontology, source_entities,
                             if confirmed:
                                 i=len(cand_list)
                                 correspondence.append([tgt_cand])
-                                #print(f"CONFIRMED: {query_PT}:{tgt_term}")
-                            fin2=time.time()
-                            #print(f'Candidate: {i}. Time: {fin2-ini2}')
+                                
                         if not confirmed:
                             correspondence.append([])
                     scores_to_prompt.append(score_list)
