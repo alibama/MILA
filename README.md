@@ -11,7 +11,7 @@ To achieve efficiency gains, MILA’s retrieval system prioritizes correspondenc
 
 # 🔍 MILA: MInimizing LLM Prompts in Ontology MApping 
 
-![MILA Overview](images/Figure_1.png) 
+![MILA Overview](images/Figure_1.jpg) 
 
 ## Workflow
 MILA consists of **two main steps**:
