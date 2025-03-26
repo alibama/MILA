@@ -49,8 +49,8 @@ You can modify this file to adjust
 
 📂 Customizable Methods Folder
 MILA includes a folder called user_methods where users can define their own functions to:
-✅ Read ontologies in different formats (e.g., OWL, RDF, or custom formats).
-✅ Query an LLM using different APIs or models.
+   - ✅ Read ontologies in different formats (e.g., OWL, RDF, or custom formats).
+   - ✅ Query an LLM using different APIs or models.
 
 This folder contains two key files:
 
