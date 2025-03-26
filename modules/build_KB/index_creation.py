@@ -1,7 +1,14 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+@author: keam
+"""
+
 import pandas as pd
 import sqlite3
 from sentence_transformers import SentenceTransformer, util
 import torch
+import time
 
 #########################################################
 def procesa_query_for_SBERT(term):
@@ -47,7 +54,7 @@ def load_ontology_dataframes_from_sql(ontology,ontology_path, column_1,column_2)
 #########################################################
 
 #def create_vector_kb (ontology1,ontology2,ontology_path,KBs_path,k=5,threshold=0.75,model='multi-qa-distilbert-cos-v1', store_embeddings=False):
-def create_vector_kb (ontology1,ontology2,ontology_path,KBs_path,k=5,threshold=0.75,model='multi-qa-distilbert-cos-v1', store_embeddings=False):
+def create_vector_kb (ontology1,ontology2,ontology_path,KBs_path,entity_list, k=5,threshold=0.75,model='multi-qa-distilbert-cos-v1', store_embeddings=False):
         
     """
     Creates a vector knowledge base by aligning terms from two ontologies using sentence embeddings and cosine similarity.
@@ -72,6 +79,7 @@ def create_vector_kb (ontology1,ontology2,ontology_path,KBs_path,k=5,threshold=0
     source_pref_terms,source_classes = load_ontology_dataframes (ontology1,ontology_path, 'PreferredTerms','Classes')
     target_terms,target_classes = load_ontology_dataframes (ontology2,ontology_path, 'Terms','Classes')
     """
+    ini_KBBuilding=time.time()
     #Load source and target ontology dataframes
     source_pref_terms,source_classes = load_ontology_dataframes_from_sql (ontology1,ontology_path, 'PreferredTerms','Classes')
     target_terms,target_classes = load_ontology_dataframes_from_sql (ontology2,ontology_path, 'Terms','Classes')
@@ -81,22 +89,24 @@ def create_vector_kb (ontology1,ontology2,ontology_path,KBs_path,k=5,threshold=0
     #Create corpus for target
     corpus = process_corpus(target_terms['Term'].to_list())
     corpus_embeddings = embedder.encode(corpus, convert_to_tensor=True)
-    
-    # Get query classes from source ontology
-    query_classes = source_classes['Entity'].tolist()
+    fin_KBBuilding=time.time()
+    print(f'Time for building KB relative to {ontology2}: {fin_KBBuilding-ini_KBBuilding}')
+    # Get query classes from source ontology to be mapped
+    query_classes = entity_list
 
     # Initialize dictionaries to collect results
     query_PT_dict = {}
     candidate_dict = {}
     score_dict = {}
     cand_PT_dict = {}
-
+    candidate_list=[]
 
     for query_class in query_classes:
           
           tgt_c_score={}
-          
+          #print(query_class)
           # Get terms for the current query class
+          
           query_c_terms=source_classes[source_classes['Entity']==query_class]['Term'].values.tolist()[0][1:-1].split('|')
           
           # Get the Preferred Term (PT) for the current query class
@@ -135,11 +145,12 @@ def create_vector_kb (ontology1,ontology2,ontology_path,KBs_path,k=5,threshold=0
           sorted_pairs = sorted(tgt_c_score.items(), key=lambda item: item[1], reverse=True)
         
           # Collect results for output
-          
-          candidate_dict[query_class] = "|".join([tgt_c for tgt_c, _ in sorted_pairs])
+          cand_list=[tgt_c for tgt_c, _ in sorted_pairs]
+          candidate_dict[query_class] = "|".join(cand_list)
           score_dict[query_class] = "|".join([str(score) for _, score in sorted_pairs])
           cand_PT_dict[query_class] = "|".join([target_classes[target_classes['Entity'] == tgt_c]['Term'].values.tolist()[0].split('|')[0] for tgt_c, _ in sorted_pairs])
-
+          
+          candidate_list=candidate_list + cand_list
         
                   
     # Create the final dataframe for the results
@@ -152,10 +163,10 @@ def create_vector_kb (ontology1,ontology2,ontology_path,KBs_path,k=5,threshold=0
                 }
 
     result_df = pd.DataFrame(result_pd)
-    """
+    
     # Save the results to an Excel file
     result_df.to_excel(f'{KBs_path}SBERTcandidates{ontology1}2{ontology2}.xlsx', index=False)
-    """
+    
     #Create the final dataframe for the results
     
     # Create an SQLite database
@@ -176,3 +187,6 @@ def create_vector_kb (ontology1,ontology2,ontology_path,KBs_path,k=5,threshold=0
         
     else:
         print("Embeddings will NOT be stored.")
+    
+     
+    return list(set(candidate_list))
