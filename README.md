@@ -54,8 +54,8 @@ MILA includes a folder called user_methods where users can define their own func
 
 This folder contains two key files:
 
-✅read_methods.py: Handles ontology file reading.
-✅LLM_methods.py: Defines how to interact with an LLM.
+   - ✅read_methods.py: Handles ontology file reading.
+   - ✅LLM_methods.py: Defines how to interact with an LLM.
 
 
 ---
