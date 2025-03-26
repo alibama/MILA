@@ -4,8 +4,9 @@
 @author: keam
 """
 import importlib
+from rip_pipeline import extract_reference_data
 from modules.extract_ontology.data_extraction import extract_entities_from_ontology
-from modules.build_KB.index_creation import create_vector_kb
+from modules.build_KB.index_creation_v2 import create_vector_kb
 from utils import load_config
 
 ##############################################################################################################
@@ -47,6 +48,12 @@ if __name__ == "__main__":
     target_ontology = config['ontology']['target_ontology']
     ontology_extension = config['ontology']['ontology_extension']
     read_methods_path = config['read_methods']['read_method_path']
+    
+    test_path = config['test']['test_path']
+    file_extension = config['test']['file_extension']
+    input_file = config['test']['input_file']
+    test_output_file = config['test']['output_file']
+    
     # Dynamically import the module containing user functions
     read_method_module = importlib.import_module(read_methods_path)
     
@@ -58,6 +65,10 @@ if __name__ == "__main__":
     
     target_PT_read_method = config['read_methods']['target_PT_read_method']
     target_PT_read_method = getattr(read_method_module, target_PT_read_method)
+   
+    extraction_method = config['read_methods']['extraction_method']
+    # Access the function from the module
+    extraction_method = getattr(read_method_module, extraction_method)
     
     # Read default values 
     k = config['default_settings']['k']
@@ -74,11 +85,17 @@ if __name__ == "__main__":
    
     extract_ontology_data(target_ontology,original_ontology_path,ontology_extension,ontology_path,target_PT_read_method)
     
+    print(f'Tiempo de extracción de ontologías: {time.time()-ini}')
     
-   #Step2: Build and save vector KB from data stored into data/ontology_data
+    #Step2: Extraction of source entities to be matched
     
-    create_vector_kb (source_ontology,target_ontology,ontology_path,KBs_path,k,threshold,model,store_embeddings)
-    create_vector_kb (target_ontology,source_ontology,ontology_path,KBs_path,k,threshold,model,store_embeddings)
+    source_entities=extract_reference_data(input_file, test_output_file, test_path, extraction_method, file_extension)
+    
+    #Step3: Build and save vector KB from data stored into data/ontology_data
+    
+    
+    target_entities=create_vector_kb (source_ontology,target_ontology,ontology_path,KBs_path,source_entities,k,threshold,model,store_embeddings)
+    create_vector_kb (target_ontology,source_ontology,ontology_path,KBs_path,target_entities,k,threshold,model,store_embeddings)
     
     fin=time.time()
     print(f'Time:{fin-ini}')
