@@ -20,13 +20,13 @@ https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5074656
 ## Workflow
 MILA consists of **two main steps**:
 
-1️⃣ **Vector KB Construction & Mapping Prediction**  
+1️⃣ Vector KB Construction & Mapping Prediction (run file KBs_Building.py)  
    - Inputs: The source and target ontologies  
    - Outputs: Vector KB for each ontology (optional) & correspondence candidates  
 
-2️⃣ **The Retrieve-Identify-Prompt Pipeline**  
+2️⃣ The Retrieve-Identify-Prompt Pipeline (run file rip_pipeline.py)  
    - Inputs: dataset of source entities to be mapped & correspondence candidates  
-   - Outputs: Valid correspondences  
+   - Outputs: Final correspondences  
 
 
 ## ⚙️ Configuration
