@@ -2,13 +2,20 @@
 MInimizing LLM Prompts in Ontology MApping
 
 ## Overview
-MILA (MInimizing LLM Prompts in Ontology MApping), a framework designed to improve both the performance and efficiency of current LLM-based OM systems. 
-MILA introduces a novel retrieve-identify-prompt pipeline, which adds an intermediate step to identify high-confidence bidirectional (HCB) correspondences with high precision. 
-These correspondences are not queried to the LLM, reducing LLM interactions to only borderline cases. 
-For these edge correspondences, MILA applies a prioritized depth-first search (PDFS) strategy, which iteratively queries the LLM for each identified bidirectional correspondence until a definitive match is confirmed. 
-Although the overall time complexity remains consistent with current LLM-based OM systems, MILA significantly reduces execution time, especially when the retrieval system ranks the most relevant candidates first. 
-To achieve efficiency gains, MILA’s retrieval system prioritizes correspondences between entities with the most semantically similar synonyms. 
-
+Ontology matching (OM) plays a key role in enabling data interoperability and knowledge sharing. Recently,
+methods based on Large Language Model (LLMs) have shown great promise in OM, particularly through the use of
+a retrieve-then-prompt pipeline. In this approach, relevant target entities are first retrieved and then used to prompt
+the LLM to predict the final matches. Despite their potential, these systems still present limited performance and
+high computational overhead. To address these issues, we introduce MILA, a novel approach that embeds a retrieve-
+identify-prompt pipeline within a prioritized depth-first search (PDFS) strategy. This approach efficiently identifies
+a large number of semantic correspondences with high accuracy, limiting LLM requests to only the most borderline
+cases. We evaluated MILA using three challenges from the 2024 edition of the Ontology Alignment Evaluation
+Initiative. Our method achieved the highest F-Measure in five of seven unsupervised tasks, outperforming state-
+of-the-art OM systems by up to 17%. It also performed better than or comparable to the leading supervised OM
+systems. MILA further exhibited task-agnostic performance, remaining stable across all tasks and settings, while
+significantly reducing runtime. These findings highlight that high-performance LLM-based OM can be achieved
+through a combination of programmed (PDFS), learned (embedding vectors), and prompting-based heuristics, without
+the need of domain-specific heuristics or fine-tuning.
 https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5074656
 
 # 🔍 MILA: MInimizing LLM Prompts in Ontology MApping 
