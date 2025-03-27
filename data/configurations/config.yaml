@@ -68,7 +68,6 @@ read_methods:
 # Configuration for LLM access methods defined by the user
 LLM_methods: 
   LLM_method_path: "user_methods.LLM_methods"
-  #Method for reading LLM credentials
   query_LLM_method: "query_LLM_ollama_simple_template"
 
 
