@@ -6,7 +6,7 @@
 import importlib
 from rip_pipeline import extract_reference_data
 from modules.extract_ontology.data_extraction import extract_entities_from_ontology
-from modules.build_KB.index_creation_v2 import create_vector_kb
+from modules.build_KB.index_creation import create_vector_kb
 from utils import load_config
 
 ##############################################################################################################
