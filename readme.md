@@ -52,5 +52,6 @@ LLM_methods.py: Defines how to interact with an LLM.
 
 1️⃣ **Clone the repository**  
 ```bash
-git clone https://github.com/your-username/mila.git
+git clone https://github.com/mariatab/mila.git
 cd mila
+pip install -r requirements.txt
